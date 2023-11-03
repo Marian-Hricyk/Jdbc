@@ -7,9 +7,9 @@ public class Database {
   private Connection connection;
   private Database() {
       // URL, користувач та пароль для підключення до бази даних
-      String url = "jdbc:postgresql://localhost:5432/mydb"; // замініть на ваш URL
-      String user = "yourUsername"; // замініть на свого користувача
-      String password = "yourPassword"; // замініть на свій пароль
+      String url = "jdbc:postgresql://localhost:5432/java143"; // замініть на ваш URL
+      String user = "postgres"; // замініть на свого користувача
+      String password = "123456654321"; // замініть на свій пароль
 
       try {
         // Встановлюємо з'єднання з базою даних

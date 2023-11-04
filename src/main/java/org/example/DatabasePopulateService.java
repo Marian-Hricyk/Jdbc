@@ -10,14 +10,20 @@ public class DatabasePopulateService {
     Database database = Database.getInstance();
     Connection connection = database.getConnection();
     try {
+
       BufferedReader reader = new BufferedReader(new FileReader("sql/populate_db.sql"));
-      String qeury;
-      Statement statement = connection.createStatement();
-      while ((qeury = reader.readLine()) != null) {
-        statement.executeUpdate(qeury);
+      StringBuilder qury = new StringBuilder();
+      String line;
+
+      while ((line = reader.readLine()) != null) {
+        qury.append(line);
       }
-      reader.close();
+
+
+      Statement statement = connection.createStatement();
+      statement.executeUpdate(qury.toString());
       statement.close();
+      reader.close();
       System.out.println("Таблиці бази даних успішно заповнено даними.");
     } catch (Exception e) {
       e.printStackTrace();

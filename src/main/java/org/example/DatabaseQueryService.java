@@ -61,7 +61,7 @@ public class DatabaseQueryService {
     try {
       Connection connection = Database.getInstance().getConnection();
 
-      BufferedReader reader = new BufferedReader(new FileReader("sql/print_project_prtices.sql"));
+      BufferedReader reader = new BufferedReader(new FileReader("sql/print_project_prices.sql"));
       StringBuilder query = new StringBuilder();
       String line;
 
@@ -76,10 +76,12 @@ public class DatabaseQueryService {
       while (resultSet.next()) {
 
         int id = resultSet.getInt("PROJECT_ID");
-        String start = resultSet.getString("START_DATE");
+        String Str = resultSet.getString("START_DATE");
+        java.sql.Date Start = java.sql.Date.valueOf(Str);
         String finish = resultSet.getString("FINISH_DATE");
+        java.sql.Date Finish=java.sql.Date.valueOf(finish);
         int cost = resultSet.getInt("PROJECT_COST");
-        ProjectPrices client = new ProjectPrices(id, start, finish,cost);
+        ProjectPrices client = new ProjectPrices(id,Start, Finish,cost);
 
 
         result.add(client);
@@ -143,7 +145,8 @@ public class DatabaseQueryService {
 
       while (resultSet.next()) {
 
-        int birthday = resultSet.getInt("BIRTHDAY");
+        String birthdayStr = resultSet.getString("BIRTHDAY");
+        java.sql.Date birthday = java.sql.Date.valueOf(birthdayStr);
         String name = resultSet.getString("NAME");
         String type= resultSet.getString("Typ");
         YoungestEldestWorkers client = new YoungestEldestWorkers(name, type,birthday);

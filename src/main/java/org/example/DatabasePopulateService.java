@@ -3,6 +3,7 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 
 public class DatabasePopulateService {
@@ -12,17 +13,20 @@ public class DatabasePopulateService {
     try {
 
       BufferedReader reader = new BufferedReader(new FileReader("sql/populate_db.sql"));
-      StringBuilder qury = new StringBuilder();
-      String line;
+      String qury;
 
-      while ((line = reader.readLine()) != null) {
-        qury.append(line);
+
+      try (PreparedStatement preparedStatement = connection.prepareStatement("")) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+          stringBuilder.append(line);
+        }
+        qury = stringBuilder.toString();
       }
-
-
-      Statement statement = connection.createStatement();
-      statement.executeUpdate(qury.toString());
-      statement.close();
+      try (PreparedStatement preparedStatement = connection.prepareStatement(qury)) {
+        preparedStatement.executeUpdate();
+      }
       reader.close();
       System.out.println("Таблиці бази даних успішно заповнено даними.");
     } catch (Exception e) {

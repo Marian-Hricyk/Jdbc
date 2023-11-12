@@ -1,4 +1,4 @@
-package org.example;
+/*package org.example;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,7 +9,6 @@ import java.sql.Statement;
 
 public class DatabasePopulateService {
   public static void main(String[] args) {
-    Database database = Database.getInstance();
     try (Connection connection = database.getConnection()) {
       String query = "INSERT INTO worker (ID, NAME, BIRTHDAY, LEVEL, SALARY) VALUES (?, ?, ?, ?, ?)";
 
@@ -107,4 +106,4 @@ public class DatabasePopulateService {
     preparedStatement.setString(2, name);
     preparedStatement.addBatch();
   }
-}
+}*/

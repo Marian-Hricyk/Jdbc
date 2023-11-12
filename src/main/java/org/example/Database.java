@@ -1,4 +1,4 @@
-package org.example;
+/*package org.example;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,4 +30,4 @@ public class Database {
   public Connection getConnection() {
     return connection;
   }
-}
+}*/

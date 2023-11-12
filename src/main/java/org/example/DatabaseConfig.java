@@ -1,8 +1,10 @@
 package org.example;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
 
@@ -33,4 +35,17 @@ public class DatabaseConfig {
     dataSource.setPassword(password);
     return dataSource;
   }
+
+  @Bean
+  public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    return new JdbcTemplate(dataSource);
+  }
+  public void printDatabaseProperties() {
+    System.out.println("Host: " + host);
+    System.out.println("Port: " + port);
+    System.out.println("Database: " + database);
+    System.out.println("Username: " + username);
+    System.out.println("Password: " + password);
+  }
 }
+

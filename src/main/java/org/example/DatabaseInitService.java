@@ -1,4 +1,4 @@
-package org.example;
+/*package org.example;
 
 import java.io.BufferedReader;
 
@@ -39,4 +39,4 @@ public class DatabaseInitService {
       e.printStackTrace();
     }
   }
-}
+}*/

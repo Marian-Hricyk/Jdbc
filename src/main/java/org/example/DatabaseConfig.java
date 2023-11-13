@@ -1,5 +1,6 @@
 package org.example;
 
+import org.flywaydb.core.Flyway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -46,6 +47,13 @@ public class DatabaseConfig {
     System.out.println("Database: " + database);
     System.out.println("Username: " + username);
     System.out.println("Password: " + password);
+  }
+  public void flyli(){
+   // DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    String url= "jdbc:postgresql://" + host + ":" + port + "/" + database;
+    Flyway flyway = Flyway.configure().dataSource(url,
+            username, password).load();
+    flyway.migrate();
   }
 }
 

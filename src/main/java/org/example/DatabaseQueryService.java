@@ -14,12 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class DatabaseQueryService {
-  //private final JdbcTemplate jdbcTemplate;
 
- /* @Autowired
-  public DatabaseQueryService(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
-  }*/
 DatabaseConfig databaseConfig=new DatabaseConfig();
 
 

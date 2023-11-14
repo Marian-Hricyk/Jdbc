@@ -1,48 +1,39 @@
 package org.example;
 
 import org.flywaydb.core.Flyway;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 @Configuration
 public class DatabaseConfig {
-
-  @Value("postgres.db.host")
   private String host;
-
-  @Value("postgres.db.port")
   private String port;
-
-  @Value("postgres.db.database")
   private String database;
-
-  @Value("postgres.db.username")
   private String username;
-
-  @Value("postgres.db.password")
   private String password;
+  public DatabaseConfig(){
+    Properties property=new Properties() ;
+    try(InputStream resourceStream=Thread.currentThread().getContextClassLoader()
+            .getResourceAsStream("application.properties")){
+      property.load(resourceStream);
+      this.port=property.getProperty("postgres.db.port=5432");
+      this.host=property.getProperty("postgres.db.host=localhost");
+      this.database=property.getProperty("postgres.db.database=java143");
+      this.password=property.getProperty("postgres.db.password=123456654321");
+      this.username=property.getProperty("postgres.db.username=postgres");
 
-  @Bean
-  public DataSource dataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName("org.postgresql.Driver");
-    dataSource.setUrl("jdbc:postgresql://" + host + ":" + port + "/" + database);
-    dataSource.setUsername(username);
-    dataSource.setPassword(password);
-    return dataSource;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
-  @Bean
-  public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-    return new JdbcTemplate(dataSource);
-  }
   public void printDatabaseProperties() {
     System.out.println("Host: " + host);
     System.out.println("Port: " + port);
@@ -50,13 +41,15 @@ public class DatabaseConfig {
     System.out.println("Username: " + username);
     System.out.println("Password: " + password);
   }
-  public void flyli(){
-   // DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    String url= "jdbc:postgresql://" + host + ":" + port + "/" + database;
+
+  public void flyli() {
+    // DriverManagerDataSource dataSource = new DriverManagerDataSource();
+    String url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
     Flyway flyway = Flyway.configure().dataSource(url,
             username, password).load();
     flyway.migrate();
   }
+
   public Connection getDatabaseConnection() {
     try {
       String url = "jdbc:postgresql://" + host + ":" + port + "/" + database;

@@ -14,19 +14,19 @@ import java.sql.SQLException;
 @Configuration
 public class DatabaseConfig {
 
-  @Value("${postgres.db.host}")
+  @Value("postgres.db.host")
   private String host;
 
-  @Value("${postgres.db.port}")
+  @Value("postgres.db.port")
   private String port;
 
-  @Value("${postgres.db.database}")
+  @Value("postgres.db.database")
   private String database;
 
-  @Value("${postgres.db.username}")
+  @Value("postgres.db.username")
   private String username;
 
-  @Value("${postgres.db.password}")
+  @Value("postgres.db.password")
   private String password;
 
   @Bean

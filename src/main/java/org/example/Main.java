@@ -9,10 +9,10 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-/*DatabaseConfig databaseConfig=new DatabaseConfig();
-databaseConfig.flyli();*/
+DatabaseConfig databaseConfig=new DatabaseConfig();
+databaseConfig.printDatabaseProperties();
+databaseConfig.flyli();
     DatabaseQueryService databaseQueryService=new DatabaseQueryService();
-
 
     List<MaxProjectCountClient> maxProjectCountClients = databaseQueryService.findMaxProjectsClient();
     List<MaxSalaryWorker> maxSalaryWorker = databaseQueryService.findMaxSalaryWorkers();

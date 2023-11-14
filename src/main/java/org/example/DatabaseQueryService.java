@@ -14,39 +14,39 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 public class DatabaseQueryService {
-  private final JdbcTemplate jdbcTemplate;
+  //private final JdbcTemplate jdbcTemplate;
 
-  @Autowired
+ /* @Autowired
   public DatabaseQueryService(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
-  }
+  }*/
+DatabaseConfig databaseConfig=new DatabaseConfig();
 
 
 
-
-  public List<MaxProjectCountClient> findMaxProjectsClient() {
+  public  List<MaxProjectCountClient> findMaxProjectsClient() {
     List<MaxProjectCountClient> result = new ArrayList<>();
-    try {
-      BufferedReader reader = new BufferedReader(new FileReader("sql/find_max_projects_client.sql"));
-      StringBuilder query = new StringBuilder();
-      String line;
 
-      while ((line = reader.readLine()) != null) {
-        query.append(line).append(" ");
-      }
+    try (Connection connection = databaseConfig.getDatabaseConnection()) {
+      try (BufferedReader reader = new BufferedReader(new FileReader("sql/find_max_projects_client.sql"))) {
+        StringBuilder query = new StringBuilder();
+        String line;
 
-      List<MaxProjectCountClient> clients = jdbcTemplate.query(query.toString(), new RowMapper<MaxProjectCountClient>() {
-        @Override
-        public MaxProjectCountClient mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-          String name = resultSet.getString("NAME");
-          int projectCount = resultSet.getInt("PROJECT_COUNT");
-          return new MaxProjectCountClient(name, projectCount);
+        while ((line = reader.readLine()) != null) {
+          query.append(line).append(" ");
         }
-      });
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-      result.addAll(clients);
-    } catch (IOException e) {
+          while (resultSet.next()) {
+            String name = resultSet.getString("NAME");
+            int projectCount = resultSet.getInt("PROJECT_COUNT");
+            result.add(new MaxProjectCountClient(name, projectCount));
+          }
+        }
+      }
+    } catch (IOException | SQLException e) {
       e.printStackTrace();
     }
 
@@ -55,61 +55,61 @@ public class DatabaseQueryService {
 
   public List<ProjectPrices> printProjectprices() {
     List<ProjectPrices> result = new ArrayList<>();
-    try {
-      BufferedReader reader = new BufferedReader(new FileReader("sql/print_project_prices.sql"));
-      StringBuilder query = new StringBuilder();
-      String line;
 
-      while ((line = reader.readLine()) != null) {
-        query.append(line).append(" ");
-      }
+    try (Connection connection = databaseConfig.getDatabaseConnection()) {
+      try (BufferedReader reader = new BufferedReader(new FileReader("sql/print_project_prices.sql"))) {
+        StringBuilder query = new StringBuilder();
+        String line;
 
-      List<ProjectPrices> clients = jdbcTemplate.query(query.toString(), new RowMapper<ProjectPrices>() {
-        @Override
-        public ProjectPrices mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-          int id = resultSet.getInt("PROJECT_ID");
-          String Str = resultSet.getString("START_DATE");
-          java.sql.Date Start = java.sql.Date.valueOf(Str);
-          String finish = resultSet.getString("FINISH_DATE");
-          java.sql.Date Finish = java.sql.Date.valueOf(finish);
-          int cost = resultSet.getInt("PROJECT_COST");
-          return new ProjectPrices(id, Start, Finish, cost);
+        while ((line = reader.readLine()) != null) {
+          query.append(line).append(" ");
         }
-      });
 
-      result.addAll(clients);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-    } catch (IOException e) {
+          while (resultSet.next()) {
+            int id = resultSet.getInt("PROJECT_ID");
+            String startDateStr = resultSet.getString("START_DATE");
+            java.sql.Date startDate = java.sql.Date.valueOf(startDateStr);
+            String finishDateStr = resultSet.getString("FINISH_DATE");
+            java.sql.Date finishDate = java.sql.Date.valueOf(finishDateStr);
+            int cost = resultSet.getInt("PROJECT_COST");
+            result.add(new ProjectPrices(id, startDate, finishDate, cost));
+          }
+        }
+      }
+    } catch (IOException | SQLException e) {
       e.printStackTrace();
     }
+
     return result;
   }
 
 
   public List<MaxSalaryWorker> findMaxSalaryWorkers() {
     List<MaxSalaryWorker> result = new ArrayList<>();
-    try {
-      BufferedReader reader = new BufferedReader(new FileReader("sql/find_max_salary_worker.sql"));
-      StringBuilder query = new StringBuilder();
-      String line;
 
-      while ((line = reader.readLine()) != null) {
-        query.append(line).append(" ");
-      }
-      reader.close();
+    try (Connection connection = databaseConfig.getDatabaseConnection()) {
+      try (BufferedReader reader = new BufferedReader(new FileReader("sql/find_max_salary_worker.sql"))) {
+        StringBuilder query = new StringBuilder();
+        String line;
 
-      List<MaxSalaryWorker> workers = jdbcTemplate.query(query.toString(), new RowMapper<MaxSalaryWorker>() {
-        @Override
-        public MaxSalaryWorker mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-          int salary = resultSet.getInt("SALARY");
-          String name = resultSet.getString("NAME");
-          return new MaxSalaryWorker(salary, name);
+        while ((line = reader.readLine()) != null) {
+          query.append(line).append(" ");
         }
-      });
 
-      result.addAll(workers);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-    } catch (IOException e) {
+          while (resultSet.next()) {
+            int salary = resultSet.getInt("SALARY");
+            String name = resultSet.getString("NAME");
+            result.add(new MaxSalaryWorker(salary, name));
+          }
+        }
+      }
+    } catch (IOException | SQLException e) {
       e.printStackTrace();
     }
 
@@ -119,31 +119,32 @@ public class DatabaseQueryService {
 
   public List<YoungestEldestWorkers> findYoungestEldestWorkers() {
     List<YoungestEldestWorkers> result = new ArrayList<>();
-    try {
-      BufferedReader reader = new BufferedReader(new FileReader("sql/find_youngest_eldest_workers.sql"));
-      StringBuilder query = new StringBuilder();
-      String line;
 
-      while ((line = reader.readLine()) != null) {
-        query.append(line).append(" ");
-      }
+    try (Connection connection = databaseConfig.getDatabaseConnection()) {
+      try (BufferedReader reader = new BufferedReader(new FileReader("sql/find_youngest_eldest_workers.sql"))) {
+        StringBuilder query = new StringBuilder();
+        String line;
 
-      List<YoungestEldestWorkers> workers = jdbcTemplate.query(query.toString(), new RowMapper<YoungestEldestWorkers>() {
-        @Override
-        public YoungestEldestWorkers mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-          String birthdayStr = resultSet.getString("BIRTHDAY");
-          java.sql.Date birthday = java.sql.Date.valueOf(birthdayStr);
-          String name = resultSet.getString("NAME");
-          String type = resultSet.getString("Typ");
-          return new YoungestEldestWorkers(name, type, birthday);
+        while ((line = reader.readLine()) != null) {
+          query.append(line).append(" ");
         }
-      });
 
-      result.addAll(workers);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
-    } catch (IOException e) {
+          while (resultSet.next()) {
+            String birthdayStr = resultSet.getString("BIRTHDAY");
+            java.sql.Date birthday = java.sql.Date.valueOf(birthdayStr);
+            String name = resultSet.getString("NAME");
+            String type = resultSet.getString("Typ");
+            result.add(new YoungestEldestWorkers(name, type, birthday));
+          }
+        }
+      }
+    } catch (IOException | SQLException e) {
       e.printStackTrace();
     }
+
     return result;
   }
 

@@ -9,14 +9,9 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-
-    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DatabaseConfig.class);
-
-
-    DatabaseConfig config = context.getBean(DatabaseConfig.class);
-    config.flyli();
-
-    DatabaseQueryService databaseQueryService = context.getBean(DatabaseQueryService.class);
+/*DatabaseConfig databaseConfig=new DatabaseConfig();
+databaseConfig.flyli();*/
+    DatabaseQueryService databaseQueryService=new DatabaseQueryService();
 
 
     List<MaxProjectCountClient> maxProjectCountClients = databaseQueryService.findMaxProjectsClient();

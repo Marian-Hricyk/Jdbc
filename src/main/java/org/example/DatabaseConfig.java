@@ -1,13 +1,15 @@
 package org.example;
 
 import org.flywaydb.core.Flyway;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 @Configuration
 public class DatabaseConfig {
@@ -54,6 +56,14 @@ public class DatabaseConfig {
     Flyway flyway = Flyway.configure().dataSource(url,
             username, password).load();
     flyway.migrate();
+  }
+  public Connection getDatabaseConnection() {
+    try {
+      String url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
+      return DriverManager.getConnection(url, username, password);
+    } catch (SQLException e) {
+      throw new RuntimeException("Failed to establish a database connection", e);
+    }
   }
 }
 

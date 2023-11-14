@@ -13,26 +13,27 @@ import java.util.Properties;
 
 @Configuration
 public class DatabaseConfig {
+  public DatabaseConfig(){
+  Properties property=new Properties() ;
+  try(InputStream resourceStream=Thread.currentThread().getContextClassLoader()
+          .getResourceAsStream("application.properties")){
+    property.load(resourceStream);
+    this.port=property.getProperty("postgres.db.port");
+    this.host=property.getProperty("postgres.db.host");
+    this.database=property.getProperty("postgres.db.database");
+    this.password=property.getProperty("postgres.db.password");
+    this.username=property.getProperty("postgres.db.username");
+
+  } catch (IOException e) {
+    throw new RuntimeException(e);
+  }
+}
+
   private String host;
   private String port;
   private String database;
   private String username;
   private String password;
-  public DatabaseConfig(){
-    Properties property=new Properties() ;
-    try(InputStream resourceStream=Thread.currentThread().getContextClassLoader()
-            .getResourceAsStream("application.properties")){
-      property.load(resourceStream);
-      this.port=property.getProperty("postgres.db.port=5432");
-      this.host=property.getProperty("postgres.db.host=localhost");
-      this.database=property.getProperty("postgres.db.database=java143");
-      this.password=property.getProperty("postgres.db.password=123456654321");
-      this.username=property.getProperty("postgres.db.username=postgres");
-
-    } catch (IOException e) {
-      throw new RuntimeException(e);
-    }
-  }
 
   public void printDatabaseProperties() {
     System.out.println("Host: " + host);

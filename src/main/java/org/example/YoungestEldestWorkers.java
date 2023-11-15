@@ -10,4 +10,12 @@ public class YoungestEldestWorkers {
     this.type = type;
     this.name = name;
   }
+  @Override
+  public String toString() {
+    return "YoungestEldestWorkers{" +
+            "name='" + name + '\'' +
+            ", type='" + type + '\'' +
+            ", birthday=" + birthday +
+            '}';
+  }
 }

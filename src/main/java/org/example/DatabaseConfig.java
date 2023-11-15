@@ -3,7 +3,7 @@ package org.example;
 import org.flywaydb.core.Flyway;
 import org.springframework.context.annotation.Configuration;
 
-import javax.sql.DataSource;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -13,21 +13,21 @@ import java.util.Properties;
 
 @Configuration
 public class DatabaseConfig {
-  public DatabaseConfig(){
-  Properties property=new Properties() ;
-  try(InputStream resourceStream=Thread.currentThread().getContextClassLoader()
-          .getResourceAsStream("application.properties")){
-    property.load(resourceStream);
-    this.port=property.getProperty("postgres.db.port");
-    this.host=property.getProperty("postgres.db.host");
-    this.database=property.getProperty("postgres.db.database");
-    this.password=property.getProperty("postgres.db.password");
-    this.username=property.getProperty("postgres.db.username");
+  public DatabaseConfig() {
+    Properties property = new Properties();
+    try (InputStream resourceStream = Thread.currentThread().getContextClassLoader()
+            .getResourceAsStream("application.properties")) {
+      property.load(resourceStream);
+      this.port = property.getProperty("postgres.db.port");
+      this.host = property.getProperty("postgres.db.host");
+      this.database = property.getProperty("postgres.db.database");
+      this.password = property.getProperty("postgres.db.password");
+      this.username = property.getProperty("postgres.db.username");
 
-  } catch (IOException e) {
-    throw new RuntimeException(e);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
-}
 
   private String host;
   private String port;

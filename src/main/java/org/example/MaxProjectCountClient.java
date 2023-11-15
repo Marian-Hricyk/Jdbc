@@ -24,4 +24,12 @@ public class MaxProjectCountClient {
   public void setProjectCount(int projectCount) {
     this.projectCount = projectCount;
   }
+  @Override
+  public String toString() {
+    return "MaxProjectCountClient{" +
+            "name='" + name + '\'' +
+            ", projectCount=" + projectCount +
+            '}';
+  }
 }
+

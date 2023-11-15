@@ -1,9 +1,5 @@
 package org.example;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,14 +8,14 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class DatabaseQueryService {
 
-DatabaseConfig databaseConfig=new DatabaseConfig();
+  DatabaseConfig databaseConfig = new DatabaseConfig();
 
 
-
-  public  List<MaxProjectCountClient> findMaxProjectsClient() {
+  public List<MaxProjectCountClient> findMaxProjectsClient() {
     List<MaxProjectCountClient> result = new ArrayList<>();
 
     try (Connection connection = databaseConfig.getDatabaseConnection()) {
@@ -31,8 +27,9 @@ DatabaseConfig databaseConfig=new DatabaseConfig();
           query.append(line).append(" ");
         }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+       try (Statement statement=connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(toString())){
 
           while (resultSet.next()) {
             String name = resultSet.getString("NAME");
@@ -60,8 +57,8 @@ DatabaseConfig databaseConfig=new DatabaseConfig();
           query.append(line).append(" ");
         }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (Statement statement=connection.createStatement();
+        ResultSet resultSet=statement.executeQuery(query.toString())) {
 
           while (resultSet.next()) {
             int id = resultSet.getInt("PROJECT_ID");
@@ -94,8 +91,8 @@ DatabaseConfig databaseConfig=new DatabaseConfig();
           query.append(line).append(" ");
         }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (Statement statement=connection.createStatement();
+             ResultSet resultSet=statement.executeQuery(query.toString())) {
 
           while (resultSet.next()) {
             int salary = resultSet.getInt("SALARY");
@@ -124,8 +121,8 @@ DatabaseConfig databaseConfig=new DatabaseConfig();
           query.append(line).append(" ");
         }
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (Statement statement=connection.createStatement();
+             ResultSet resultSet=statement.executeQuery(query.toString())) {
 
           while (resultSet.next()) {
             String birthdayStr = resultSet.getString("BIRTHDAY");

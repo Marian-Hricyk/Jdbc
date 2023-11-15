@@ -12,5 +12,13 @@ public class ProjectPrices {
     this.finish = finish;
     this.cost = cost;
   }
-
+  @Override
+  public String toString() {
+    return "ProjectPrices{" +
+            "id=" + id +
+            ", start=" + start +
+            ", finish=" + finish +
+            ", cost=" + cost +
+            '}';
+  }
 }

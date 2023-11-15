@@ -1,5 +1,5 @@
 
-INSERT INTO worker (ID, NAME, BIRTHDAY, LEVEL, SALARY) VALUES
+INSERT INTO worker (ID, "NAME", BIRTHDAY, "LEVEL", SALARY) VALUES
 (1, 'John Doe', '1990-01-15', 'Senior', 6000),
 (2, 'Jane Smith', '1992-03-22', 'Middle', 4000),
 (3, 'Tom Johnson', '1995-08-10', 'Junior', 2500),
@@ -11,7 +11,7 @@ INSERT INTO worker (ID, NAME, BIRTHDAY, LEVEL, SALARY) VALUES
 (9, 'David Clark', '1987-06-13', 'Junior', 2600),
 (10, 'Linda Martinez', '1999-04-22', 'Trainee', 1100);
 
-INSERT INTO client (ID, NAME) VALUES
+INSERT INTO client (ID, "NAME") VALUES
 (1, 'Stark'),
 (2, 'Lannister'),
 (3, 'Targaryen'),

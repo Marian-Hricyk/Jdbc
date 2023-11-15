@@ -44,7 +44,7 @@ public class DatabaseConfig {
   }
 
   public void flyli() {
-    // DriverManagerDataSource dataSource = new DriverManagerDataSource();
+
     String url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
     Flyway flyway = Flyway.configure().dataSource(url,
             username, password).load();

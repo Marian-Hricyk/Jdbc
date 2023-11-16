@@ -1,34 +1,7 @@
-DO $$
-BEGIN
-    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'project_worker') THEN
-        -- Table exists, drop it
-        DROP TABLE project_worker;
-    END IF;
-END $$;
-
-DO $$
-BEGIN
-    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'project') THEN
-        -- Table exists, drop it
-        DROP TABLE project;
-    END IF;
-END $$;
-
-DO $$
-BEGIN
-    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'worker ') THEN
-        -- Table exists, drop it
-        DROP TABLE worker ;
-    END IF;
-END $$;
-
-DO $$
-BEGIN
-    IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = ' client ') THEN
-        -- Table exists, drop it
-        DROP TABLE  client ;
-    END IF;
-END $$;
+DELETE TABLE IF EXISTS project_worker;
+DELETE TABLE IF EXISTS project;
+DELETE TABLE IF EXISTS client ;
+DELETE TABLE IF EXISTS worker;
 
 
 CREATE TABLE worker (

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
+
 
 @Service
 public class DatabaseQueryService {
@@ -72,13 +72,9 @@ public class DatabaseQueryService {
                ResultSet resultSet = statement.executeQuery(query.toString())) {
 
             while (resultSet.next()) {
-              int id = resultSet.getInt("PROJECT_ID");
-              String startDateStr = resultSet.getString("START_DATE");
-              java.sql.Date startDate = java.sql.Date.valueOf(startDateStr);
-              String finishDateStr = resultSet.getString("FINISH_DATE");
-              java.sql.Date finishDate = java.sql.Date.valueOf(finishDateStr);
-              int cost = resultSet.getInt("PROJECT_COST");
-              result.add(new ProjectPrices(id, startDate, finishDate, cost));
+              int id = resultSet.getInt("name");
+              int cost = resultSet.getInt("price");
+              result.add(new ProjectPrices(id, cost));
             }
           }
         }
